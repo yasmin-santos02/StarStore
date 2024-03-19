@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StarStore.Helper;
+using System.ComponentModel.DataAnnotations;
 
 namespace StarStore.Models
 {
@@ -14,5 +15,15 @@ namespace StarStore.Models
         [EmailAddress(ErrorMessage = "O E-mail informado é inválido!")]
         public string Email { get; set; }
 
+
+        public bool SenhaValida(string senha)
+        {
+            return Senha == senha.GerarHash();
+        }
+
+        public void SetSenhaHash()
+        {
+            Senha = Senha.GerarHash();
+        }
     }
 }

@@ -10,13 +10,21 @@ namespace StarStore.Repositorio
         public LoginRepositorio(BancoContext bancoContext)
         {
             _context = bancoContext;
+        } 
+        
+        public LoginModel BuscarPorLogin(string login)
+        {
+            return _context.Usuarios.FirstOrDefault(x => x.Login.ToUpper() == login.ToUpper());
         }
         public LoginModel CriarLogin(LoginModel loginModel)
         {
             //gravar no banco de dados
-              _context.Usuarios.Add(loginModel);
-              _context.SaveChanges();
-              return loginModel;  
+            loginModel.SetSenhaHash();
+            _context.Usuarios.Add(loginModel);
+            _context.SaveChanges();
+            return loginModel;
         }
+
+       
     }
 }
